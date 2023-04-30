@@ -41,6 +41,7 @@ func main() {
 	// Parse command-line flags
 	add := flag.Bool("add", false, "Add a new password to the config.")
 	configFile := flag.String("config", "config.json", "Config file with password hashes.")
+	cost := flag.Int("cost", 16, "Bcrypt hashing cost")
 	flag.Parse()
 
 	// Initialize the configuration
@@ -86,7 +87,7 @@ func main() {
 			log.Fatal("Passwords do not match.")
 		}
 
-		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password0), 16)
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password0), *cost)
 		if err != nil {
 			log.Fatal(err)
 		}
